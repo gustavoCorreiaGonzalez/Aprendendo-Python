@@ -19,9 +19,25 @@ class Perfil(object):
 	def obter_curtidas(self):
 		return self.__curtidas
 
+	# não precisa do atributo self pois não queremos acessar uma instância da classe
+	# método de classe e não de instância
+	# tem que passar a classe que será usada
+	@classmethod
+	def gerar_perfis(classe, nome_arquivo):
+		arquivo = open(nome_arquivo, 'r')
+		perfils = []
+
+		for linha in arquivo:
+			valores = linha.split(',')
+			perfils.append(classe(*valores))
+
+		arquivo.close()
+		return perfils
+
 class Perfil_Vip(Perfil):
 	
-	def __init__(self, nome, telefone, empresa, apelido):
+	# apelido posse ser branco
+	def __init__(self, nome, telefone, empresa, apelido = ''):
 		# consigo acessar o construtor da classe pai e passar os atributos que são dele
 		super(Perfil_Vip, self).__init__(nome, telefone, empresa)
 		self.apelido = apelido
